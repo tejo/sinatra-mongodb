@@ -18,6 +18,7 @@ end
 World do
   session = Webrat::SinatraSession.new
   session.extend(Webrat::Matchers)
+  session.extend(Webrat::HaveTagMatcher)
   session
 end
 

@@ -1,0 +1,10 @@
+<h3><%=@cd.title%></h3>
+artist: <%=@cd.artist%> <br>
+year: <%=@cd.year%> <br>
+genre: <%=@cd.genre%> <br>
+    tracks:
+    <ul>
+    <% for track in @cd.tracks do %>
+      <li><%=track%></li>
+    <%end%>
+    </ul>

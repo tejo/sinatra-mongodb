@@ -27,6 +27,11 @@ get '/cds/:page' do
   erb :index
 end
 
+get '/cds/:disc_id/view' do
+  @cd = Cd.find_by_disc_id(params[:disc_id])
+  erb :view
+end
+
 get '/cds/' do
  redirect '/cds/1'
 end

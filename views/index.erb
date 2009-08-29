@@ -2,11 +2,8 @@
 <% for cd in @cds do %>
   <li>
   <h3><%=cd.title%></h3>
-    <ul>
-    <% for track in cd.tracks do %>
-      <li><%=track%></li>
-    <%end%>
-    </ul>
+  <%=cd.artist%> 
+  <small><a href="/cds/<%=cd.disc_id%>/view">details</a></small>
   </li>
 <%end%>
 </ul>
