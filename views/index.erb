@@ -1,0 +1,14 @@
+<ul>
+<% for cd in @cds do %>
+  <li>
+  <h3><%=cd.title%></h3>
+    <ul>
+    <% for track in cd.tracks do %>
+      <li><%=track%></li>
+    <%end%>
+    </ul>
+  </li>
+<%end%>
+</ul>
+
+<%= Cd.count %>
