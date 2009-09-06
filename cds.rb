@@ -1,15 +1,25 @@
 require 'rubygems'
 require 'mongomapper'
 require 'sinatra'
-require 'will_paginate'
+
 
 
 before do
   content_type 'text/html', :charset => 'UTF-8'
 end
 
+
+
+configure :test do
+  @@db = "cd-test"
+end
+
+configure :development, :production do
+  @@db = "cd"
+end
+
 MongoMapper.connection = XGen::Mongo::Driver::Mongo.new('localhost')
-MongoMapper.database = 'cd'
+MongoMapper.database = @@db 
 
 class Cd
   include MongoMapper::Document
