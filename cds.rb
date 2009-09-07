@@ -1,7 +1,8 @@
+$LOAD_PATH << File.join(Dir.getwd,'lib')
 require 'rubygems'
 require 'mongomapper'
 require 'sinatra'
-
+require 'cd'
 
 
 before do
@@ -21,16 +22,6 @@ end
 MongoMapper.connection = XGen::Mongo::Driver::Mongo.new('localhost')
 MongoMapper.database = @@db 
 
-class Cd
-  include MongoMapper::Document
-
-  key :disc_id, String
-  key :artist, String
-  key :title, String
-  key :genre, String
-  key :year, Integer
-  key :tracks, Array
-end
 
 get '/cds/:page' do
   @cds = Cd.paginate(:per_page => 50, :page => params[:page].to_i)

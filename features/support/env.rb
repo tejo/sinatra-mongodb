@@ -9,7 +9,7 @@ Sinatra::Application.app_file = File.join(File.dirname(__FILE__), *%w[.. .. cds.
 require 'rubygems'
 require 'spec/expectations'
 require 'webrat'
-require 'mongo'
+
 
 
 Webrat.configure do |config|
