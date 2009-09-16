@@ -8,7 +8,11 @@ require 'cd'
 before do
   content_type 'text/html', :charset => 'UTF-8'
 end
-
+ 
+ 
+configure do
+  set :views, "#{File.dirname(__FILE__)}/views"
+end
 
 
 configure :test do

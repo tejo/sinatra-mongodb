@@ -4,7 +4,10 @@ ENV['RACK_ENV'] = 'test'
 # sinatra will look in the wrong place for its views.
 require File.dirname(__FILE__) + '/../../cds'
 
-Sinatra::Application.app_file = File.join(File.dirname(__FILE__), *%w[.. .. cds.rb])
+app_file = File.join(File.dirname(__FILE__), *%w[.. .. cds.rb])
+require app_file
+# Force the application name because polyglot breaks the auto-detection logic.
+Sinatra::Application.app_file = app_file
 
 require 'rubygems'
 require 'spec/expectations'
@@ -13,7 +16,11 @@ require 'webrat'
 
 
 Webrat.configure do |config|
-  config.mode = :sinatra 
+  config.mode = :rack 
+end
+
+def response
+  webrat.response
 end
 
 #cancella il database di test alla fine. 
@@ -28,11 +35,18 @@ After do
   MongoMapper.connection.drop_database(@@db)
 end
 
-World do
-  session = Webrat::SinatraSession.new
-  session.extend(Webrat::Matchers)
-  session.extend(Webrat::HaveTagMatcher)
-  session
+class MyWorld
+  include Rack::Test::Methods
+  include Webrat::Methods
+  include Webrat::Matchers
+
+  Webrat::Methods.delegate_to_session :response_code, :response_body
+
+  def app
+    Sinatra::Application
+  end
 end
+
+World{MyWorld.new}
 
 
